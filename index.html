@@ -412,19 +412,30 @@
                     </div>
 
                     <div class="mt-12 bg-medical-primary text-white p-8 rounded-3xl">
-                        <h4 class="text-xl font-bold mb-4">Book Your Consultation</h4>
-                        <form class="space-y-4">
-                            <input type="text" placeholder="Your Name" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-white/50 focus:outline-none focus:border-white">
-                            <input type="tel" placeholder="Phone Number" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-white/50 focus:outline-none focus:border-white">
-                            <select class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white/50 focus:outline-none focus:border-white appearance-none">
-                                <option>Select Treatment</option>
-                                <option>Skin Treatment</option>
-                                <option>Laser Hair Removal</option>
-                                <option>Hair Transplant</option>
-                                <option>Aesthetic/Cosmetic</option>
-                            </select>
-                            <button class="w-full bg-medical-accent text-white font-bold py-4 rounded-xl hover:bg-opacity-90 transition-all shadow-lg uppercase tracking-widest text-sm">Submit Request</button>
+                        <h4 class="text-xl font-bold mb-4 text-center">Book Your Consultation</h4>
+                        <form id="whatsapp-form" class="space-y-4">
+                            <div>
+                                <label class="text-[10px] uppercase tracking-widest text-white/60 ml-1 mb-1 block">Full Name</label>
+                                <input type="text" id="apt-name" required placeholder="Dr. Ajay Singh's Patient" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-white/30 focus:outline-none focus:border-white text-white">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase tracking-widest text-white/60 ml-1 mb-1 block">Phone Number</label>
+                                <input type="tel" id="apt-phone" required placeholder="Your contact number" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-white/30 focus:outline-none focus:border-white text-white">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase tracking-widest text-white/60 ml-1 mb-1 block">Preferred Date</label>
+                                <input type="date" id="apt-date" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white/60 focus:outline-none focus:border-white [color-scheme:dark]">
+                            </div>
+                            <div>
+                                <label class="text-[10px] uppercase tracking-widest text-white/60 ml-1 mb-1 block">Required Treatment</label>
+                                <input type="text" id="apt-treatment" required placeholder="e.g., Acne Treatment, Laser, etc." class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 placeholder:text-white/30 focus:outline-none focus:border-white text-white">
+                            </div>
+                            <button type="submit" class="w-full bg-medical-accent text-white font-bold py-4 rounded-xl hover:scale-[1.02] transition-all shadow-lg uppercase tracking-widest text-sm flex items-center justify-center space-x-2">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>Send to WhatsApp</span>
+                            </button>
                         </form>
+                        <p class="text-[10px] text-center text-white/40 mt-4 italic">* This will open your WhatsApp to send the booking details directly.</p>
                     </div>
                 </div>
 
@@ -528,6 +539,30 @@
             } else {
                 header.classList.remove('py-1', 'shadow-md');
             }
+        });
+
+        // WhatsApp Form Logic
+        document.getElementById('whatsapp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('apt-name').value;
+            const phone = document.getElementById('apt-phone').value;
+            const date = document.getElementById('apt-date').value;
+            const treatment = document.getElementById('apt-treatment').value;
+            
+            const doctorNumber = "916262968686"; // International format for 062629 68686
+            
+            const message = `*Kalyani™ Skin Clinic - New Appointment*%0A%0A` +
+                            `*Patient Name:* ${encodeURIComponent(name)}%0A` +
+                            `*Phone:* ${encodeURIComponent(phone)}%0A` +
+                            `*Requested Date:* ${encodeURIComponent(date)}%0A` +
+                            `*Treatment:* ${encodeURIComponent(treatment)}%0A%0A` +
+                            `_Sent via website booking system_`;
+            
+            const whatsappUrl = `https://wa.me/${doctorNumber}?text=${message}`;
+            
+            // Open in new tab
+            window.open(whatsappUrl, '_blank');
         });
     </script>
 </body>
